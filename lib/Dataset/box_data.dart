@@ -36,14 +36,14 @@ List<BoxData> boxDataset = [
     price: "77,900",
   ),
   BoxData(
-    imagePath: 'images/product-images/product4.jpg',
-    productName: "Apple iPhone 16 (128 GB) - Ultramarine",
-    price: "77,900",
+    imagePath: 'images/product-images/product5.png',
+    productName: "U.S. POLO ASSN. Men Vertical Stripe Premium Cotton Regular Fit Casual Shirt",
+    price: "1649",
   ),
   BoxData(
-    imagePath: 'images/product-images/product4.jpg',
-    productName: "Apple iPhone 16 (128 GB) - Ultramarine",
-    price: "77,900",
+    imagePath: 'images/product-images/product6.png',
+    productName: "Lavie Women's Nova Tote Bag",
+    price: "1049",
   ),
   // Add more products as needed
 ];
