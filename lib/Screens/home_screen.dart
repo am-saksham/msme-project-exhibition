@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:msme_exhibition/Items/collection_box.dart';
 
 import '../Dataset/box_data.dart';
 import '../Items/capsule.dart';
@@ -7,6 +8,18 @@ import '../Items/rounded_box.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+
+  // Refactored method for displaying collection sections
+  Widget buildCollectionSection(String label, String imagePath, double height) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+      child: RoundedRectangle(
+        imagePath: imagePath,
+        height: height,
+        labelText: label,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -189,6 +202,13 @@ class HomeScreen extends StatelessWidget {
                   textAlign: TextAlign.left,
                 ),
               ),
+
+              // Using the refactored method for each collection section
+              buildCollectionSection('Men', 'images/app-images/men_collection.jpg', 250.0),
+              buildCollectionSection('Women', 'images/app-images/women_collection.jpg', 250.0),
+              buildCollectionSection('Electronics', 'images/app-images/electronics_collection.jpg', 250.0),
+              buildCollectionSection('Jewellery', 'images/app-images/jewellery_collection.jpg', 250.0),
+              buildCollectionSection('All', 'images/app-images/all_collection.jpg', 450.0),
             ]),
           ),
         ],
