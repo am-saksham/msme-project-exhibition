@@ -5,13 +5,15 @@ class RoundedBox extends StatelessWidget {
   final String imagePath;
   final String productName;
   final String price;
+  final String category; // Keep category to organize products, but don't display it
 
-  // Constructor to accept image, name, and price for each product
+  // Constructor to accept image, name, price, and category for each product
   const RoundedBox({
     Key? key,
     required this.imagePath,
     required this.productName,
     required this.price,
+    required this.category, // Accept category here, but won't display it
   }) : super(key: key);
 
   @override
@@ -99,6 +101,24 @@ class RoundedBox extends StatelessWidget {
             ],
           ),
         ),
+
+        // Category Badge (Optional, currently hidden)
+        // const SizedBox(height: 8),
+        // Container(
+        //   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        //   decoration: BoxDecoration(
+        //     color: Colors.grey.withOpacity(0.2),
+        //     borderRadius: BorderRadius.circular(12),
+        //   ),
+        //   child: Text(
+        //     category, // Display the category name (currently hidden)
+        //     style: const TextStyle(
+        //       fontSize: 12,
+        //       color: Colors.black,
+        //       fontWeight: FontWeight.w400,
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }

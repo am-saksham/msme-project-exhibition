@@ -5,26 +5,47 @@ import 'package:msme_exhibition/Items/footer_section.dart';
 import 'package:msme_exhibition/Items/help_section.dart';
 
 import '../Dataset/box_data.dart';
-import '../Items/capsule.dart';
+import '../Items/capsule.dart';  // Import Capsule widget
 import '../Items/rounded_box.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  _HomeScreenState createState() => _HomeScreenState();
+}
 
+class _HomeScreenState extends State<HomeScreen> {
+  bool showMoreCapsules = false;
+
+  @override
+  Widget build(BuildContext context) {
     List<Widget> roundedBoxes = boxDataset.map((box) => RoundedBox(
       imagePath: box.imagePath,
       productName: box.productName,
-      price: box.price,
+      price: box.price, category: box.category,
     )).toList();
+
+    // Default capsules
+    List<Capsule> capsules = [
+      const Capsule(text: "All", textColor: Colors.black, borderColor: Colors.black),
+      const Capsule(text: "Men", textColor: Colors.black, borderColor: Colors.black),
+      const Capsule(text: "Women", textColor: Colors.black, borderColor: Colors.black),
+      const Capsule(text: "Electronics", textColor: Colors.black, borderColor: Colors.black),
+      const Capsule(text: "Accessories", textColor: Colors.black, borderColor: Colors.black),
+      const Capsule(text: "Beauty", textColor: Colors.black, borderColor: Colors.black),
+      const Capsule(text: "Sports", textColor: Colors.black, borderColor: Colors.black),
+    ];
+
+    // Only show the first four capsules by default
+    List<Capsule> displayedCapsules = capsules.take(4).toList();
+    List<Capsule> additionalCapsules = capsules.sublist(4);
 
     return Scaffold(
       backgroundColor: const Color(0xFFFAE9F5),
       body: CustomScrollView(
         slivers: [
-          // SliverAppBar for the app bar that stays visible
+          // SliverAppBar
           SliverAppBar(
             backgroundColor: Colors.black54,
             pinned: true,
@@ -109,46 +130,54 @@ class HomeScreen extends StatelessWidget {
                     bool isOverflowing = false;
                     double rowWidth = 0;
 
-                    List<Capsule> capsules = [
-                      const Capsule(text: "All", textColor: Colors.black, borderColor: Colors.black),
-                      const Capsule(text: "Men", textColor: Colors.black, borderColor: Colors.black),
-                      const Capsule(text: "Women", textColor: Colors.black, borderColor: Colors.black),
-                      const Capsule(text: "Electronics", textColor: Colors.black, borderColor: Colors.black),
-                    ];
-
-                    for (var capsule in capsules) {
-                      rowWidth += capsule.text.length * 10 + 40;
-                      if (rowWidth > constraints.maxWidth) {
-                        isOverflowing = true;
-                        break;
-                      }
-                    }
-
-                    return Row(
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        for (int i = 0; i < capsules.length; i++) ...[
-                          capsules[i],
-                          if (i != capsules.length - 1) const SizedBox(width: 8),
-                        ],
-                        if (isOverflowing)
-                          const Icon(Icons.arrow_forward, color: Color(0xFFFF5A1E)),
-                        if (!isOverflowing)
-                          const SizedBox(width: 8),
-                        if (!isOverflowing)
-                          const Text(
-                            "More",
-                            style: TextStyle(
-                              fontSize: 11,
-                              color: Color(0xFFFF5A1E),
+                        // Wrap widget for default and additional capsules
+                        Column(
+                          children: [
+                            // First Row for default capsules (4 capsules)
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                for (int i = 0; i < displayedCapsules.length; i++) ...[
+                                  displayedCapsules[i],
+                                  if (i != displayedCapsules.length - 1) const SizedBox(width: 8),
+                                ],
+                                // Arrow button beside the last capsule (Electronics)
+                                IconButton(
+                                  icon: Icon(
+                                    showMoreCapsules ? Icons.arrow_downward : Icons.arrow_forward,
+                                    color: const Color(0xFFFF5A1E),
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      showMoreCapsules = !showMoreCapsules;
+                                    });
+                                  },
+                                ),
+                              ],
                             ),
-                          ),
+                            // If 'showMoreCapsules' is true, show additional capsules below
+                            if (showMoreCapsules)
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  for (int i = 0; i < additionalCapsules.length; i++) ...[
+                                    additionalCapsules[i],
+                                    if (i != additionalCapsules.length - 1) const SizedBox(width: 8),
+                                  ],
+                                ],
+                              ),
+                          ],
+                        ),
                       ],
                     );
                   },
                 ),
               ),
 
-              // Rounded border boxes below capsules, two in a row
+              // Rounded border boxes below capsules
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
                 child: LayoutBuilder(
@@ -179,7 +208,7 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
 
-              // "Collections" title below the boxes
+              // "Collections" section below the boxes
               Padding(
                 padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 10.0, bottom: 5.0),
                 child: Text(
@@ -192,8 +221,8 @@ class HomeScreen extends StatelessWidget {
                   textAlign: TextAlign.left,
                 ),
               ),
-               const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
                 child: RoundedRectangle(
                   imagePath: 'images/app-images/men_collection.jpg',
                   height: 250.0,
@@ -233,18 +262,19 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               const Divider(
-                color: Color(0xFFFFC5EC), // You can customize the color
-                thickness: 2, // You can adjust the thickness
-                indent: 16, // Adjust the indent for alignment
-                endIndent: 16, // Adjust the end indent for alignment
+                color: Color(0xFFFFC5EC),
+                thickness: 2,
+                height: 40,
+                indent: 20,
+                endIndent: 20,
               ),
-              const SizedBox(height: 20),
-              const HelpSection(),
-              const SizedBox(height: 5),
-              const FooterSection(),
-              const SizedBox(height: 20),
             ]),
           ),
+
+          // Footer
+          const SliverToBoxAdapter(child: HelpSection()),
+          const SliverToBoxAdapter(child: FooterSection()),
+          const SliverToBoxAdapter(child: SizedBox(height: 15)),
         ],
       ),
     );
