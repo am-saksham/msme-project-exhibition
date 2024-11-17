@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:msme_exhibition/Items/collection_box.dart';
+import 'package:msme_exhibition/Items/footer_section.dart';
+import 'package:msme_exhibition/Items/help_section.dart';
 
 import '../Dataset/box_data.dart';
 import '../Items/capsule.dart';
@@ -8,18 +10,6 @@ import '../Items/rounded_box.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
-  // Refactored method for displaying collection sections
-  Widget buildCollectionSection(String label, String imagePath, double height) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
-      child: RoundedRectangle(
-        imagePath: imagePath,
-        height: height,
-        labelText: label,
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -202,13 +192,57 @@ class HomeScreen extends StatelessWidget {
                   textAlign: TextAlign.left,
                 ),
               ),
-
-              // Using the refactored method for each collection section
-              buildCollectionSection('Men', 'images/app-images/men_collection.jpg', 250.0),
-              buildCollectionSection('Women', 'images/app-images/women_collection.jpg', 250.0),
-              buildCollectionSection('Electronics', 'images/app-images/electronics_collection.jpg', 250.0),
-              buildCollectionSection('Jewellery', 'images/app-images/jewellery_collection.jpg', 250.0),
-              buildCollectionSection('All', 'images/app-images/all_collection.jpg', 450.0),
+               const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+                child: RoundedRectangle(
+                  imagePath: 'images/app-images/men_collection.jpg',
+                  height: 250.0,
+                  labelText: 'Men',
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+                child: RoundedRectangle(
+                  imagePath: 'images/app-images/women_collection.jpg',
+                  height: 250.0,
+                  labelText: 'Women',
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+                child: RoundedRectangle(
+                  imagePath: 'images/app-images/electronics_collection.jpg',
+                  height: 250.0,
+                  labelText: 'Electronics',
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+                child: RoundedRectangle(
+                  imagePath: 'images/app-images/jewellery_collection.jpg',
+                  height: 250.0,
+                  labelText: 'Jewellery',
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+                child: RoundedRectangle(
+                  imagePath: 'images/app-images/all_collection.jpg',
+                  height: 450.0,
+                  labelText: 'All',
+                ),
+              ),
+              const Divider(
+                color: Color(0xFFFFC5EC), // You can customize the color
+                thickness: 2, // You can adjust the thickness
+                indent: 16, // Adjust the indent for alignment
+                endIndent: 16, // Adjust the end indent for alignment
+              ),
+              const SizedBox(height: 20),
+              const HelpSection(),
+              const SizedBox(height: 5),
+              const FooterSection(),
+              const SizedBox(height: 20),
             ]),
           ),
         ],
