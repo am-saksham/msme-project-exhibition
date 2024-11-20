@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> roundedBoxes = boxDataset.map((box) => RoundedBox(
+    List<Widget> roundedBoxes = boxDataset.take(6).map((box) => RoundedBox(
       imagePath: box.imagePath,
       productName: box.productName,
       price: box.price,

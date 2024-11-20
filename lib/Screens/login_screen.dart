@@ -10,7 +10,7 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          CustomSliverAppBar(
+          const CustomSliverAppBar(
             title: 'Micro Mart',
             expandedHeight: 50.0, // Optional: you can add a subtitle here
           ),
