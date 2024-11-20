@@ -5,6 +5,7 @@ import 'package:msme_exhibition/Items/footer_section.dart';
 import 'package:msme_exhibition/Items/help_section.dart';
 
 import '../Dataset/box_data.dart';
+import '../Items/appbar.dart';
 import '../Items/capsule.dart';  // Import Capsule widget
 import '../Items/rounded_box.dart';
 
@@ -23,7 +24,9 @@ class _HomeScreenState extends State<HomeScreen> {
     List<Widget> roundedBoxes = boxDataset.map((box) => RoundedBox(
       imagePath: box.imagePath,
       productName: box.productName,
-      price: box.price, category: box.category,
+      price: box.price,
+      category: box.category,
+      description: box.description,
     )).toList();
 
     // Default capsules
@@ -46,65 +49,12 @@ class _HomeScreenState extends State<HomeScreen> {
       body: CustomScrollView(
         slivers: [
           // SliverAppBar
-          SliverAppBar(
-            backgroundColor: Colors.black54,
-            pinned: true,
+          CustomSliverAppBar(
+            title: 'Micro Mart',
             expandedHeight: MediaQuery.of(context).size.height * 0.8,
-            flexibleSpace: FlexibleSpaceBar(
-              background: Stack(
-                fit: StackFit.expand,
-                children: [
-                  Image.asset(
-                    'images/app-images/hero-1.jpeg',
-                    fit: BoxFit.cover,
-                  ),
-                  Positioned(
-                    bottom: 20,
-                    left: 16,
-                    right: 16,
-                    child: Text(
-                      'ACCESS RESOURCES, TOOLS, AND\nSUPPORT TAILORED TO\nYOUR BUSINESS NEEDS.',
-                      style: GoogleFonts.nunito(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w900,
-                        color: Colors.white,
-                        height: 1.5,
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Micro Mart',
-                  style: GoogleFonts.nunito(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w900,
-                    color: Colors.white,
-                  ),
-                ),
-                Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.search, color: Colors.white),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.shopping_bag, color: Colors.white),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.person, color: Colors.white),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+            backgroundImage: 'images/app-images/hero-1.jpeg',
+            subtitle:
+            'ACCESS RESOURCES, TOOLS, AND\nSUPPORT TAILORED TO\nYOUR BUSINESS NEEDS.',
           ),
 
           // Sliver for the rest of the content

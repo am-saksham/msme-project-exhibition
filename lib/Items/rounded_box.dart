@@ -1,125 +1,128 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../Screens/product_detail_screen.dart'; // Import the ProductDetailScreen
 
+/// A custom widget to display a product in a rounded box design.
+/// Tapping the box navigates to the ProductDetailScreen.
 class RoundedBox extends StatelessWidget {
-  final String imagePath;
-  final String productName;
-  final String price;
-  final String category; // Keep category to organize products, but don't display it
+  final String imagePath; // Path to the product image
+  final String productName; // Name of the product
+  final String price; // Price of the product
+  final String category; // Category to which the product belongs
+  final String? description; // Optional detailed description of the product
 
-  // Constructor to accept image, name, price, and category for each product
   const RoundedBox({
     Key? key,
     required this.imagePath,
     required this.productName,
     required this.price,
-    required this.category, // Accept category here, but won't display it
+    required this.category,
+    this.description, // Optional description parameter
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        // Product Image Box
-        Container(
-          width: 165,
-          height: 165, // Fixed size for the box
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(28),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 8,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image.asset(
-              imagePath,
-              width: 100,  // Fixed width for the image
-              height: 100, // Fixed height for the image
-              fit: BoxFit.contain, // Ensures the image does not stretch and stays within the box
+    return GestureDetector(
+      onTap: () {
+        // Navigate to the ProductDetailScreen and pass the product details
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductDetailScreen(
+              imagePath: imagePath,
+              productName: productName,
+              price: price,
+              category: category,
+              description: description, // Pass the description
             ),
           ),
-        ),
+        );
+        print("Description passed: $description");
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // Product Image Box
+          Container(
+            width: 165,
+            height: 165, // Fixed size for the box
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(28),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 8,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image.asset(
+                imagePath,
+                width: 100, // Fixed width for the image
+                height: 100, // Fixed height for the image
+                fit: BoxFit.contain, // Ensures the image does not stretch
+              ),
+            ),
+          ),
 
-        const SizedBox(height: 10), // Spacing between image and text
+          const SizedBox(height: 10), // Spacing between image and text
 
-        // Product Name and Add to Cart icon row
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // Product Name (Left side)
-              // Use Expanded or Flexible to prevent overflow
-              Expanded(
-                child: Text(
-                  productName,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w600,
+          // Product Name and Add to Cart Icon Row
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // Product Name
+                Expanded(
+                  child: Text(
+                    productName,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis, // Handles long product names
                   ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis, // Truncate if too long
                 ),
-              ),
 
-              // Add to Cart Icon (Right side)
-              IconButton(
-                icon: const Icon(Icons.add_shopping_cart),
-                color: const Color(0xFFFF5A1E),
-                onPressed: () {
-                  // Add to cart action
-                },
-              ),
-            ],
-          ),
-        ),
-
-        const SizedBox(height: 5), // Space between the name+icon row and price
-
-        // Product Price directly below the product name and left-aligned
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start, // Align price to the left
-            children: [
-              Text(
-                '₹$price',
-                style: GoogleFonts.poppins(
-                  fontSize: 14,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
+                // Add to Cart Icon
+                IconButton(
+                  icon: const Icon(Icons.add_shopping_cart),
+                  color: const Color(0xFFFF5A1E), // Accent color for the cart icon
+                  onPressed: () {
+                    // Add to cart action can be implemented here
+                  },
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
 
-        // Category Badge (Optional, currently hidden)
-        // const SizedBox(height: 8),
-        // Container(
-        //   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-        //   decoration: BoxDecoration(
-        //     color: Colors.grey.withOpacity(0.2),
-        //     borderRadius: BorderRadius.circular(12),
-        //   ),
-        //   child: Text(
-        //     category, // Display the category name (currently hidden)
-        //     style: const TextStyle(
-        //       fontSize: 12,
-        //       color: Colors.black,
-        //       fontWeight: FontWeight.w400,
-        //     ),
-        //   ),
-        // ),
-      ],
+          const SizedBox(height: 5), // Space between name+icon row and price
+
+          // Product Price
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start, // Align price to the left
+              children: [
+                Text(
+                  '₹$price', // Display price with currency symbol
+                  style: GoogleFonts.poppins(
+                    fontSize: 14,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -17,20 +17,17 @@ class Capsule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12.0), // Adjust padding for smaller size
-      height: 22, // Set height to 22
+      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0), // Adjust padding
       decoration: BoxDecoration(
-        border: Border.all(color: borderColor), // Border color
-        borderRadius: BorderRadius.circular(25), // Border radius of 25
+        border: Border.all(color: borderColor),
+        borderRadius: BorderRadius.circular(25),
       ),
-      child: Center(
-        child: Text(
-          text,
-          style: GoogleFonts.poppins(
-            color: textColor,
-            fontWeight: FontWeight.w700, // Adjust font weight if needed
-            fontSize: 14, // Adjust font size to fit in the smaller capsule
-          ),
+      child: Text(
+        text,
+        style: GoogleFonts.poppins(
+          color: textColor,
+          fontWeight: FontWeight.w600,
+          fontSize: 12, // Slightly smaller font for better fit
         ),
       ),
     );
