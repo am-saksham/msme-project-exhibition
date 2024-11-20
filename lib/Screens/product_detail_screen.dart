@@ -105,9 +105,9 @@ class ProductDetailScreen extends StatelessWidget {
                       const SizedBox(height: 10),
                       if (description != null && description!.isNotEmpty)
                         ExpansionTile(
-                          title: const Text(
+                          title: Text(
                             'Product Description',
-                            style: TextStyle(
+                            style: GoogleFonts.poppins(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
@@ -120,7 +120,7 @@ class ProductDetailScreen extends StatelessWidget {
                                 description!,
                                 style: GoogleFonts.poppins(
                                   fontSize: 14,
-                                  color: Colors.black54,
+                                  color: Colors.black,
                                 ),
                               ),
                             ),
@@ -151,71 +151,69 @@ class ProductDetailScreen extends StatelessWidget {
                       const SizedBox(height: 30),
                       Align(
                         alignment: Alignment.centerLeft, // Aligns the buttons to the left
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 16.0), // Adds padding to the left for spacing
-                          child: Row(
-                            children: [
-                              // Add to Cart Button
-                              ElevatedButton(
-                                onPressed: () {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text('Added to Cart!'),
-                                    ),
-                                  );
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFFFF5A1E), // Color for the button
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 24,
-                                    vertical: 12,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start, // Ensures left alignment
+                          children: [
+                            // Add to Cart Button
+                            ElevatedButton(
+                              onPressed: () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Added to Cart!'),
                                   ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFFFF5A1E), // Color for the button
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 24,
+                                  vertical: 12,
                                 ),
-                                child: const Text(
-                                  'Add to Cart',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.white,
-                                  ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
                                 ),
                               ),
-                              const SizedBox(width: 16), // Adds spacing between the two buttons
+                              child: Text(
+                                'Add to Cart',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 16), // Adds spacing between the two buttons
 
-                              // Buy Now Button
-                              ElevatedButton(
-                                onPressed: () {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text('Proceed to Buy Now!'),
-                                    ),
-                                  );
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF4CAF50), // Color for the button
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 24,
-                                    vertical: 12,
+                            // Buy Now Button
+                            ElevatedButton(
+                              onPressed: () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Proceed to Buy Now!'),
                                   ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFFFFBA00), // Color for the button
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 24,
+                                  vertical: 12,
                                 ),
-                                child: const Text(
-                                  'Buy Now',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.white,
-                                  ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
                                 ),
                               ),
-                            ],
-                          ),
+                              child: Text(
+                                'Buy Now',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 18,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      const SizedBox(height: 50),
+                      const SizedBox(height: 20),
                     ],
                   ),
                 ),
