@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:msme_exhibition/Screens/login_screen.dart';
 
 class CustomSliverAppBar extends StatelessWidget {
   final String title;
@@ -72,10 +73,17 @@ class CustomSliverAppBar extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {},
-                icon: const Icon(Icons.shopping_bag, color: Colors.white),
+                icon: const Icon(Icons.shopping_cart_rounded, color: Colors.white),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LoginScreen(), // Replace with your actual LoginPage
+                    ),
+                  );
+                },
                 icon: const Icon(Icons.person, color: Colors.white),
               ),
             ],
