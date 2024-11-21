@@ -3,11 +3,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:msme_exhibition/Items/collection_box.dart';
 import 'package:msme_exhibition/Items/footer_section.dart';
 import 'package:msme_exhibition/Items/help_section.dart';
+import 'package:msme_exhibition/Screens/all_products_screen.dart';
 
 import '../Dataset/box_data.dart';
 import '../Items/appbar.dart';
 import '../Items/capsule.dart';  // Import Capsule widget
 import '../Items/rounded_box.dart';
+import 'category_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -77,9 +79,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.only(left: 16.0, right: 8.0, bottom: 10.0),
                 child: LayoutBuilder(
                   builder: (context, constraints) {
-                    bool isOverflowing = false;
-                    double rowWidth = 0;
-
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -171,44 +170,93 @@ class _HomeScreenState extends State<HomeScreen> {
                   textAlign: TextAlign.left,
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
-                child: RoundedRectangle(
-                  imagePath: 'images/app-images/men_collection.jpg',
-                  height: 250.0,
-                  labelText: 'Men',
+              GestureDetector(
+                onTap: () {
+                  // Navigate to the category screen for 'Men'
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CategoryScreen(category: 'Men'),
+                    ),
+                  );
+                },
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+                  child: RoundedRectangle(
+                    imagePath: 'images/app-images/men_collection.jpg',
+                    height: 250.0,
+                    labelText: 'Men',
+                  ),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
-                child: RoundedRectangle(
-                  imagePath: 'images/app-images/women_collection.jpg',
-                  height: 250.0,
-                  labelText: 'Women',
+              GestureDetector(
+                onTap: () {
+                  // Navigate to the category screen for 'Women'
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CategoryScreen(category: 'Women'),
+                    ),
+                  );
+                },
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+                  child: RoundedRectangle(
+                    imagePath: 'images/app-images/women_collection.jpg',
+                    height: 250.0,
+                    labelText: 'Women',
+                  ),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
-                child: RoundedRectangle(
-                  imagePath: 'images/app-images/electronics_collection.jpg',
-                  height: 250.0,
-                  labelText: 'Electronics',
+              GestureDetector(
+                onTap: () {
+                  // Navigate to the category screen for 'Electronics'
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CategoryScreen(category: 'Electronics'),
+                    ),
+                  );
+                },
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+                  child: RoundedRectangle(
+                    imagePath: 'images/app-images/electronics_collection.jpg',
+                    height: 250.0,
+                    labelText: 'Electronics',
+                  ),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
-                child: RoundedRectangle(
-                  imagePath: 'images/app-images/jewellery_collection.jpg',
-                  height: 250.0,
-                  labelText: 'Jewellery',
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CategoryScreen(category: 'Jewellery')),
+                  );
+                },
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+                  child: RoundedRectangle(
+                    imagePath: 'images/app-images/jewellery_collection.jpg',
+                    height: 250.0,
+                    labelText: 'Jewellery',
+                  ),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
-                child: RoundedRectangle(
-                  imagePath: 'images/app-images/all_collection.jpg',
-                  height: 450.0,
-                  labelText: 'All',
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const AllProductsScreen()),
+                  );
+                },
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+                  child: RoundedRectangle(
+                    imagePath: 'images/app-images/all_collection.jpg',
+                    height: 450.0,
+                    labelText: 'All',
+                  ),
                 ),
               ),
               const Divider(

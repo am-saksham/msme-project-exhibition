@@ -18,6 +18,9 @@ class CustomSliverAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Check if the current screen is the LoginScreen
+    bool isLoginScreen = ModalRoute.of(context)?.settings.name == '/login';
+
     return SliverAppBar(
       backgroundColor: Colors.black54,
       pinned: true,
@@ -75,12 +78,13 @@ class CustomSliverAppBar extends StatelessWidget {
                 onPressed: () {},
                 icon: const Icon(Icons.shopping_cart_rounded, color: Colors.white),
               ),
+              // Disable the person icon if already on LoginScreen
               IconButton(
-                onPressed: () {
+                onPressed: isLoginScreen ? null : () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const LoginScreen(), // Replace with your actual LoginPage
+                      builder: (context) => const LoginScreen(),
                     ),
                   );
                 },
