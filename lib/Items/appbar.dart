@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:msme_exhibition/Screens/login_screen.dart';
 
+import 'cart_modal.dart'; // Import the CartModal
+
 class CustomSliverAppBar extends StatelessWidget {
   final String title;
   final double expandedHeight;
@@ -74,13 +76,18 @@ class CustomSliverAppBar extends StatelessWidget {
                 onPressed: () {},
                 icon: const Icon(Icons.search, color: Colors.white),
               ),
+              // Already existing cart icon
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  _showCartModal(context); // Trigger the cart modal
+                },
                 icon: const Icon(Icons.shopping_cart_rounded, color: Colors.white),
               ),
               // Disable the person icon if already on LoginScreen
               IconButton(
-                onPressed: isLoginScreen ? null : () {
+                onPressed: isLoginScreen
+                    ? null
+                    : () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -94,6 +101,16 @@ class CustomSliverAppBar extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  // Function to show the modal bottom sheet when the cart is clicked
+  void _showCartModal(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return const CartModal(); // Use the CartModal widget
+      },
     );
   }
 }
