@@ -20,10 +20,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool showMoreCapsules = false;
+  List shuffledDataset = List.of(boxDataset)..shuffle();
+
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> roundedBoxes = boxDataset.take(6).map((box) => RoundedBox(
+    List<Widget> roundedBoxes = shuffledDataset.take(6).map((box) => RoundedBox(
       imagePath: box.imagePath,
       productName: box.productName,
       price: box.price,
