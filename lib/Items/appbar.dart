@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:msme_exhibition/Screens/login_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../Screens/logged_in_page.dart';
 import '../Screens/product_list_screen.dart';
 import 'cart_modal.dart';
 import 'cart_provider.dart';
@@ -123,24 +125,41 @@ class CustomSliverAppBar extends StatelessWidget {
                     ),
                 ],
               ),
-              IconButton(
-                onPressed: isLoginScreen
-                    ? null
-                    : () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const LoginScreen(),
-                    ),
-                  );
-                },
-                icon: const Icon(Icons.person, color: Colors.white),
+              Stack(
+                children: [
+                  IconButton(
+                    onPressed: () async {
+                      bool isLoggedIn = await _checkLoginStatus();
+                      if (isLoggedIn) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoggedInPage(),
+                          ),
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginScreen(),
+                          ),
+                        );
+                      }
+                    },
+                    icon: const Icon(Icons.person, color: Colors.white),
+                  ),
+                ],
               ),
             ],
           ),
         ],
       ),
     );
+  }
+
+  Future<bool> _checkLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isLoggedIn') ?? false; // Check if user is logged in
   }
 
   // Function to show the modal bottom sheet when the cart is clicked

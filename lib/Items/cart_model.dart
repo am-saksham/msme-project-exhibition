@@ -10,4 +10,24 @@ class CartItem {
     required this.imagePath,
     required this.category,
   });
+
+  // Convert CartItem to JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'productName': productName,
+      'price': price,
+      'imagePath': imagePath,
+      'category': category,
+    };
+  }
+
+  // Convert JSON to CartItem
+  static CartItem fromJson(Map<String, dynamic> json) {
+    return CartItem(
+      productName: json['productName'],
+      price: json['price'],
+      imagePath: json['imagePath'],
+      category: json['category'],
+    );
+  }
 }

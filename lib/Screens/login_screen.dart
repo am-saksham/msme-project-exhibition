@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:msme_exhibition/Items/footer_section.dart';
 import 'package:msme_exhibition/Items/help_section.dart';
 import '../Items/appbar.dart';
+import 'logged_in_page.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -18,10 +20,37 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool isButtonEnabled = false;
 
-  // Placeholder for onSearch function (adjust this as per your requirements)
-  void _onSearch(String query) {
-    // Handle search functionality here
-    print("Searching for: $query");
+  // Hardcoded credentials
+  final String demoUsername = 'mor_2314';
+  final String demoPassword = '83r5^_';
+
+  void _checkFields(String value) {
+    setState(() {
+      isButtonEnabled =
+          _usernameController.text.isNotEmpty && _passwordController.text.isNotEmpty;
+    });
+  }
+
+  Future<void> _handleLogin() async {
+    if (_formKey.currentState?.validate() ?? false) {
+      if (_usernameController.text == demoUsername &&
+          _passwordController.text == demoPassword) {
+        // Save login state to SharedPreferences
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('isLoggedIn', true);
+
+        // Navigate to LoggedInPage
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const LoggedInPage()),
+        );
+      } else {
+        // Show error
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Invalid username or password!')),
+        );
+      }
+    }
   }
 
   @override
@@ -29,10 +58,9 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          // Ensure you pass onSearch to CustomSliverAppBar
-          CustomSliverAppBar(
+          const CustomSliverAppBar(
             title: 'Micro Mart',
-            expandedHeight: 50.0, // Pass the onSearch function here
+            expandedHeight: 50.0,
           ),
           SliverToBoxAdapter(
             child: Container(
@@ -54,6 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Form(
                     key: _formKey,
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TextFormField(
                           controller: _usernameController,
@@ -77,6 +106,24 @@ class _LoginScreenState extends State<LoginScreen> {
                             return null;
                           },
                           onChanged: _checkFields,
+                        ),
+                        const SizedBox(height: 8),
+                        Text.rich(
+                          TextSpan(
+                            text: 'Demo Username: ',
+                            style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              color: Colors.black,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: 'mor_2314',
+                                style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                         const SizedBox(height: 20),
                         TextFormField(
@@ -103,6 +150,24 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           onChanged: _checkFields,
                         ),
+                        const SizedBox(height: 8),
+                        Text.rich(
+                          TextSpan(
+                            text: 'Demo Password: ',
+                            style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              color: Colors.black,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: '83r5^_',
+                                style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -110,20 +175,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: isButtonEnabled
-                          ? () {
-                        if (_formKey.currentState?.validate() ?? false) {
-                          // Perform login logic
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Login submitted!')),
-                          );
-                        }
-                      }
-                          : null,
+                      onPressed: isButtonEnabled ? _handleLogin : null,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: isButtonEnabled
-                            ? const Color(0xFFFFBA00) // Yellow when enabled
-                            : Colors.grey, // Grey when disabled
+                            ? const Color(0xFFFFBA00)
+                            : Colors.grey,
                         padding: const EdgeInsets.symmetric(vertical: 15),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -162,12 +218,5 @@ class _LoginScreenState extends State<LoginScreen> {
         ],
       ),
     );
-  }
-
-  // Method to enable/disable button
-  void _checkFields(String value) {
-    setState(() {
-      isButtonEnabled = _usernameController.text.isNotEmpty && _passwordController.text.isNotEmpty;
-    });
   }
 }
